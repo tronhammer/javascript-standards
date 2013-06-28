@@ -149,7 +149,7 @@ All `for` loops will instantiate variables with `var` in their expression.
         // logic...
     }
     
-######Identifiers
+####Identifiers
 Utilize identifiers in nested loops if applicable.
 
 ######Example
@@ -514,8 +514,12 @@ Listed here are things to take into consideration during development.
 Words Of The Wise
 ---------------------
 
+######Idiotmatic.js
+> All code in any code-base should look like a single person typed it, no matter how many people contributed.
+
+######Chris Heilmann
 > HTML that makes sense without JavaScript should not be created with JavaScript. HTML that *only* makes sense *with* Javascript should be created with JavaScript.
-> - Chris Heilmann
+
 
 ---------
 Resources
