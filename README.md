@@ -431,7 +431,7 @@ Always cache results of any function that is going to be used multiple times in 
 
 ######Example
     /* BAD */
-    if ($(".container").length)
+    if ($(".container"))
     {
         $(".container").find(".item").fadeIn();
         // logic ...
@@ -440,13 +440,43 @@ Always cache results of any function that is going to be used multiple times in 
     
     /* GOOD */
     var $container = $(".container");
-    if ($container.length)
+    if ($container)
     {
         var $item = $container.find(".item");
         $item.fadeIn();
         // logic ...
         $item.addClass("selected");
     }
+
+Also, attempt to cache object properties where used multiple times. ([Object property lookup vs cached local variables](http://jsperf.com/object-property-lookup-tron))
+
+    var obj = {
+      "one": "one",
+      "two": "two",
+      "three": "three",
+      "four": "four",
+      "five": "four"
+    };
+    
+    /* SLOW */
+    (function(obj) {
+      if (obj.one == "one") {
+        if (obj.one == "one") {
+          // look up good
+        }
+      }
+    })(obj);
+
+    /* FAST */
+    (function(obj) {
+      var one = obj.one; // cached property
+      if (one == "one") {
+        if (one == "one") {
+          // look up good
+        }
+      }
+    })(obj);
+    
 
 -------------
 Documentation
@@ -535,6 +565,7 @@ Resources
  - [A Baseline for Front End Developers by Rebecca Murphy](http://rmurphey.com/blog/2012/04/12/a-baseline-for-front-end-developers/)
  - [Scripting Maintainability by Chris Heilmann](http://www.slideshare.net/cheilmann/fronteers-maintainability-presentation)
  - [Javascript Style Guide by Neil Rashbrook](http://neil.rashbrook.org/Js.htm)
+ - [Writing Efficient Javascript](http://oreilly.com/server-administration/excerpts/even-faster-websites/writing-efficient-javascript.html)
  - [JavaScript Semicolon Insertion](http://inimino.org/~inimino/blog/javascript_semicolons)
  - [Named Function Expressions and the IE dilemma](http://kiro.me/blog/nfe_dilemma.html)
  - [ECMA International](http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf)
